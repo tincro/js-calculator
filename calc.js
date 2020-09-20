@@ -57,10 +57,15 @@ const updateDisplay = (num) => {
 
 const clearDisplay = () => {
     let display = document.querySelector('#display');
+    let decBtn = document.querySelector('#btn-dec');
+    
     display.textContent = '';
+    decBtn.disabled = false;
 }
 
 const reset = (clear=true) => {
+    let decBtn = document.querySelector('#btn-dec');
+    decBtn.disabled = false;
     num1 = null;
     num2 = null;
     currentOperation = null;
@@ -74,9 +79,10 @@ const grabNum = (operator) => {
     isComputing = false;
 
     if(!num1) {
-        num1 = parseInt(display.textContent);
+        num1 = parseFloat(display.textContent);
+        console.log(num1);
     } else {
-        num2 = parseInt(display.textContent);
+        num2 = parseFloat(display.textContent);
     }
 
     if (operator === '=') {
@@ -109,6 +115,7 @@ const container = document.querySelector('#btns-container');
 const opsContainer = document.querySelector('#ops-container');
 const ops = ['+', '-', '*', '/', '='];
 const clearBtn = document.createElement('button');
+const decimalBtn = document.createElement('button');
 
 for(let i=0; i<=9; i++) {
     let btn = document.createElement('button');
@@ -118,6 +125,15 @@ for(let i=0; i<=9; i++) {
     btn.addEventListener('click', function() {updateDisplay(btn.textContent)});
     container.appendChild(btn);
 }
+
+decimalBtn.className = 'btn';
+decimalBtn.id = 'btn-dec';
+decimalBtn.textContent = '.'
+decimalBtn.addEventListener('click', function(){
+    updateDisplay(decimalBtn.textContent);
+    decimalBtn.disabled = true;
+});
+container.appendChild(decimalBtn);
 
 for(let i=0; i<ops.length; i++) {
     let btn = document.createElement('button');
