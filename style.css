@@ -34,3 +34,7 @@
     order: 1;
     flex-grow: 2;
 }
+
+#btn-undo {
+    flex-grow: 2;
+}

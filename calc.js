@@ -45,6 +45,17 @@ const updateDisplay = (num) => {
     let display = document.querySelector('#display');
 
     if (!isComputing) clearDisplay();
+
+    if (num === '<--') {
+        let backup = display.textContent.slice(0, -1);
+        let dec = document.querySelector('#btn-dec');
+        display.textContent = backup;
+        
+        if (!display.textContent.includes('.')){
+            dec.disabled = false;
+        }
+        return;
+    }
     
     if (display.textContent === 0) {
         display.textContent = num;
@@ -116,6 +127,7 @@ const opsContainer = document.querySelector('#ops-container');
 const ops = ['+', '-', '*', '/', '='];
 const clearBtn = document.createElement('button');
 const decimalBtn = document.createElement('button');
+const backBtn = document.createElement('button');
 
 for(let i=0; i<=9; i++) {
     let btn = document.createElement('button');
@@ -146,7 +158,14 @@ for(let i=0; i<ops.length; i++) {
     opsContainer.appendChild(btn);
 }
 
+
 clearBtn.textContent = 'C';
 clearBtn.className = 'btn';
 clearBtn.addEventListener('click', reset);
 opsContainer.appendChild(clearBtn);
+
+backBtn.className = 'btn';
+backBtn.id = 'btn-undo';
+backBtn.textContent = '<--'
+backBtn.addEventListener('click', function(){updateDisplay(backBtn.textContent) });
+opsContainer.appendChild(backBtn);
