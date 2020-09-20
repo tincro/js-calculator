@@ -1,0 +1,36 @@
+#container {
+    width: 300px;
+    margin: 0 auto;
+    
+}
+
+#display {
+    border: 1px solid #000000;
+    padding: 12px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.btn-grid {
+    width: 50%;
+    display: flex;
+    flex-flow: row wrap;
+    
+}
+
+.btn {
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 3px;
+}
+
+.btn-op {   
+    background-color: #0066AA;
+    color: #ffffff;
+}
+
+
+#btn-0 {
+    order: 1;
+    flex-grow: 2;
+}
