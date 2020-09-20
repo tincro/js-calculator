@@ -42,17 +42,17 @@ const operate = (operator, num1, num2) => {
 }
 
 const updateDisplay = (num) => {
-
     let display = document.querySelector('#display');
-    if(num1 && !num2 && currentOperation) clearDisplay();
 
+    if (!isComputing) clearDisplay();
+    
     if (display.textContent === 0) {
         display.textContent = num;
     } else {
         display.textContent += num;
+        isComputing = true;
     }
     displayValue = display.textContent;
-    console.log(num1, num2, currentOperation);
 }
 
 const clearDisplay = () => {
@@ -60,45 +60,49 @@ const clearDisplay = () => {
     display.textContent = '';
 }
 
-const grabNum = (operator) => {
-    let display = document.querySelector('#display');
-
-    if(operator === '=') {
-        num2 = parseInt(display.textContent)
-        res = operate(currentOperation, num1, num2);
-        updateDisplay(res);
-        reset(clear=false);
-        num1 = res;
-    } else {
-        
-        if (num1 && currentOperation) {
-            num2 = parseInt(display.textContent);
-            res = operate(currentOperation, num1, num2);
-            reset();
-            updateDisplay(res);
-            num1 = res;
-            currentOperation = operator;
-            
-        } else{
-            currentOperation = operator;
-
-            num1 = parseInt(display.textContent);
-        }
-    }
-    console.log(num1, num2, currentOperation);
-}
-
 const reset = (clear=true) => {
     num1 = null;
     num2 = null;
-    currentOperation = '';
+    currentOperation = null;
     if (clear) clearDisplay();
-    console.log(num1, num2, currentOperation);
+}
+
+const grabNum = (operator) => {
+    let display = document.querySelector('#display');
+    let res;
+
+    isComputing = false;
+
+    if(!num1) {
+        num1 = parseInt(display.textContent);
+    } else {
+        num2 = parseInt(display.textContent);
+    }
+
+    if (operator === '=') {
+        res = operate(currentOperation, num1, num2);
+        reset(clear=false);
+    } else {
+        if(!currentOperation)currentOperation = operator;
+        
+        if (num1 && num2) {
+            res = operate(currentOperation, num1 ,num2);
+            currentOperation = operator;
+            num1 = res;
+            num2 = null;
+        } else {
+            res = num1;
+        }
+    }
+
+    clearDisplay();
+    display.textContent = res;
 }
 
 var num1 = null;
 var num2 = null;
-var currentOperation = '';
+var currentOperation = null;
+var isComputing = true;
 
 let displayValue = '';
 const container = document.querySelector('#btns-container');
@@ -130,7 +134,3 @@ clearBtn.textContent = 'C';
 clearBtn.className = 'btn';
 clearBtn.addEventListener('click', reset);
 opsContainer.appendChild(clearBtn);
-
-
-
-
