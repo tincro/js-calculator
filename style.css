@@ -1,31 +1,43 @@
+body {
+    background-color: #090C08;
+}
 #container {
+    background-color: #474056;
     width: 300px;
     margin: 0 auto;
-    
+    border: 1px solid #888;
+    border-radius: 10px;
+    padding: 13px;
 }
 
 #display {
+    background-color: #8A95A5;
     border: 1px solid #000000;
+    border-radius: 5px;
     padding: 12px;
     font-size: 24px;
     margin-bottom: 10px;
+    height:24px;
 }
 
 .btn-grid {
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
-    
 }
 
 .btn {
     padding: 15px;
     font-size: 18px;
+    border: 1px solid #888;
     border-radius: 3px;
+    width: 30%;
+    margin: 2px 2px;
+    flex-grow: 1;
 }
 
 .btn-op {   
-    background-color: #0066AA;
+    background-color: #757083;
     color: #ffffff;
 }
 
@@ -35,6 +47,14 @@
     flex-grow: 2;
 }
 
-#btn-undo {
+#btn-dec {
     flex-grow: 2;
+}
+
+#btn-undo {
+    flex-grow: 1;
+}
+
+#ops-container {
+    margin-top: 5px;
 }

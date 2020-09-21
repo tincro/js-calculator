@@ -99,7 +99,6 @@ const grabNum = (operator) => {
 
     if(!num1) {
         num1 = parseFloat(display.textContent);
-        console.log(num1);
     } else {
         num2 = parseFloat(display.textContent);
     }
