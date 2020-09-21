@@ -50,6 +50,7 @@ const updateDisplay = (input) => {
         if(decimalBtn.disabled === false){
             decimalBtn.disabled = true;
             display.textContent += input;
+            isComputing = true;
         }
         return;
     }
@@ -65,7 +66,7 @@ const updateDisplay = (input) => {
         return;
     }
     
-    if (display.textContent === 0) {
+    if (display.textContent.startsWith(0)) {
         display.textContent = input;
     } else {
         display.textContent += input;
