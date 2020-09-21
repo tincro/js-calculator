@@ -41,16 +41,24 @@ const operate = (operator, num1, num2) => {
     return result;
 }
 
-const updateDisplay = (num) => {
+const updateDisplay = (input) => {
     let display = document.querySelector('#display');
 
     if (!isComputing) clearDisplay();
 
-    if (num === '<--') {
+    if (input === '.') {
+        if(decimalBtn.disabled === false){
+            decimalBtn.disabled = true;
+            display.textContent += input;
+        }
+        return;
+    }
+
+    if (input === '<--') {
         let backup = display.textContent.slice(0, -1);
         let dec = document.querySelector('#btn-dec');
         display.textContent = backup;
-        
+
         if (!display.textContent.includes('.')){
             dec.disabled = false;
         }
@@ -58,9 +66,9 @@ const updateDisplay = (num) => {
     }
     
     if (display.textContent === 0) {
-        display.textContent = num;
+        display.textContent = input;
     } else {
-        display.textContent += num;
+        display.textContent += input;
         isComputing = true;
     }
     displayValue = display.textContent;
@@ -143,7 +151,7 @@ decimalBtn.id = 'btn-dec';
 decimalBtn.textContent = '.'
 decimalBtn.addEventListener('click', function(){
     updateDisplay(decimalBtn.textContent);
-    decimalBtn.disabled = true;
+    
 });
 container.appendChild(decimalBtn);
 
@@ -169,3 +177,28 @@ backBtn.id = 'btn-undo';
 backBtn.textContent = '<--'
 backBtn.addEventListener('click', function(){updateDisplay(backBtn.textContent) });
 opsContainer.appendChild(backBtn);
+
+document.addEventListener('keydown', function(e){
+    var numReg = /[0-9.]/;
+    var opReg = /[//]|[*=+-]/;
+    var editReg = /[cC]/;
+    let enterKey = 'Enter';
+    let backKey = 'ArrowLeft';
+    if (e.key.match(numReg)){
+        updateDisplay(e.key);
+    } else if (e.key.match(opReg) || e.key === enterKey){
+        if(e.key === enterKey) {
+            grabNum('=');
+        } else {
+            grabNum(e.key);
+        }
+    } else if (e.key.match(editReg)) {
+        reset();
+    } else {
+        if (e.key === backKey) {
+            updateDisplay('<--');
+        }
+    }
+    
+    
+});
